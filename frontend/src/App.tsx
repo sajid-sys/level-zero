@@ -18,7 +18,6 @@ import { SAMPLE_CASES } from './data/sample_cases';
 import type { OptimizeEnergyRequest, OptimizeEnergyResponse, SampleCase } from './types/energy';
 import { checkApiHealth, postOptimizeEnergy } from './api/client';
 import {
-  Zap,
   AlertCircle,
   SlidersHorizontal,
   BarChart3,

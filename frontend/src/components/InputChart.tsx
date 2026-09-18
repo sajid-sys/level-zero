@@ -7,7 +7,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
   CartesianGrid
 } from 'recharts';
 import type { HourInput } from '../types/energy';
