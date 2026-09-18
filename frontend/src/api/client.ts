@@ -1,6 +1,6 @@
 import type { OptimizeEnergyRequest, OptimizeEnergyResponse } from '../types/energy';
 
-const API_BASE = '';
+const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) || '';
 
 export async function checkApiHealth(): Promise<boolean> {
   try {
