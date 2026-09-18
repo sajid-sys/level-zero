@@ -44,24 +44,40 @@ export const ValidationPanel: React.FC<ValidationPanelProps> = ({ response, hour
     { label: 'Non-Negative Physical Values', pass: nonNegative, detail: 'Zero negative values detected' },
   ];
 
+  const allPass = checks.every((c) => c.pass);
+
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+      <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 mb-4">
         <div className="flex items-center space-x-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <h2 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
-            Client-Side Independent Verification
-          </h2>
+          <div className="w-6 h-6 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-100">
+            <ShieldCheck className="w-3.5 h-3.5" />
+          </div>
+          <div>
+            <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+              Independent Physical Replay Audit
+            </h2>
+          </div>
         </div>
-        <span className="text-xs text-slate-500 font-medium">Zero-Trust Solution Checks</span>
+        <span
+          className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded border ${
+            allPass
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+              : 'bg-rose-50 text-rose-800 border-rose-200'
+          }`}
+        >
+          {allPass ? 'VERIFIED: 6/6 PASS (Tolerance < 0.05)' : 'VIOLATION DETECTED'}
+        </span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {checks.map((c, i) => (
           <div
             key={i}
-            className={`p-3 rounded-lg border flex items-start space-x-2.5 ${
-              c.pass ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'
+            className={`p-3.5 rounded-lg border flex items-start space-x-3 transition ${
+              c.pass
+                ? 'bg-emerald-50/40 border-emerald-200/80 text-emerald-950'
+                : 'bg-rose-50/50 border-rose-200 text-rose-950'
             }`}
           >
             {c.pass ? (
@@ -69,18 +85,18 @@ export const ValidationPanel: React.FC<ValidationPanelProps> = ({ response, hour
             ) : (
               <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
             )}
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-slate-800">{c.label}</span>
+            <div className="flex-1">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-900">{c.label}</span>
                 <span
-                  className={`text-[10px] font-bold px-1.5 py-0.2 rounded uppercase ${
-                    c.pass ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'
+                  className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded uppercase tracking-wider ${
+                    c.pass ? 'bg-emerald-200/80 text-emerald-900' : 'bg-rose-200 text-rose-900'
                   }`}
                 >
                   {c.pass ? 'PASS' : 'FAIL'}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-mono mt-0.5">{c.detail}</p>
+              <p className="text-[11px] text-slate-600 font-mono mt-1 tabular-nums">{c.detail}</p>
             </div>
           </div>
         ))}
